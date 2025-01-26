@@ -16,9 +16,9 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('category_id')->constrained('categories')->cascadeOnDelete();
+            $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
 
-            $table->foreignId('brand_id')->constrained('brands')->cascadeOnDelete();
+            $table->foreignId('brand_id')->constrained('brands')->onDelete('cascade');
             $table->string('name');
             $table->string('slug')->unique();           
              $table->json('images')->nullable();
@@ -28,7 +28,6 @@ return new class extends Migration
              $table->boolean('is_featured')->default(false);
              $table->boolean('in_stock')->default(true);
              $table->boolean('on_sale')->default(false);
-
             $table->timestamps();
         });
     }
