@@ -2,6 +2,8 @@
 
 namespace App\Filament\Resources;
 
+use Filament\Resources\Pages\CreateRecord;
+use Filament\Resources\Pages\Page;
 use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers;
 use App\Models\User;
@@ -23,7 +25,21 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\TextInput::make('name')
+                ->required(),
+Forms\Components\TextInput::make('email')
+->label('Email Address')
+->email()
+->maxlength(255)
+->unique(ignoreRecord: true)
+->required(),
+Forms\Components\DateTimePicker::make('email_verified_at')
+->label('Email Verified At')
+->default(now()),
+Forms\Components\TextInput::make('password')
+->password()
+->dehydrated(fn($state) => filled($state))
+->required(fn($livewire): bool => $livewire instanceof CreateRecord),
             ]);
     }
 
@@ -31,13 +47,26 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('name')
+                ->searchable(),
+                Tables\Columns\TextColumn::make('email')
+                ->searchable(),
+                Tables\Columns\TextColumn::make('email_verified_at')
+                ->dateTime()
+                ->sortable(),
+                Tables\Columns\TextColumn::make('created at')
+                ->datetime()
+                ->sortable(),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\ActionGroup::make([
+                    Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\ViewAction::make(),
+                ])
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
