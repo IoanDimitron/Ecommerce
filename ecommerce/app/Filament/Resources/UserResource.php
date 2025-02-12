@@ -54,7 +54,7 @@ Forms\Components\TextInput::make('password')
                 Tables\Columns\TextColumn::make('email_verified_at')
                 ->dateTime()
                 ->sortable(),
-                Tables\Columns\TextColumn::make('created at')
+                Tables\Columns\TextColumn::make('created_at')
                 ->datetime()
                 ->sortable(),
             ])
