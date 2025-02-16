@@ -24,8 +24,8 @@ class Product extends Model
     protected $casts = [
         'images' => 'array',
     ];
-    public function brand() {
-        return $this -> belongsTo(Brand::class);
+    public function brands() {
+        return $this -> belongsTo(Brands::class, 'brand_id');
     }
     public function category() {
         return $this -> belongsTo(Category::class);
