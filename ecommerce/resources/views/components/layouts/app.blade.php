@@ -9,7 +9,9 @@
         @livewireStyles
     </head>
     <body class="bg-slate-200 dark:bg-slate-700">
+        <main>
         {{ $slot }}
+        </main>
         @livewireScripts
     </body>
 </html>
