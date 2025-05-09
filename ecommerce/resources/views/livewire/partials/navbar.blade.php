@@ -1,5 +1,5 @@
 <header
-  class="flex z-50 sticky top-0 flex-wrap md:justify-start md:flex-nowrap w-full bg-white text-sm py-2 md:py-0 dark:bg-gray-800 shadow-md">
+  class="flex z-[9999] sticky top-0 flex-wrap md:justify-start md:flex-nowrap w-full bg-white text-sm py-2 md:py-0 dark:bg-gray-800 shadow-md">
   <nav class="max-w-[85rem] w-full mx-auto px-4 md:px-6 lg:px-8" aria-label="Global">
     <div class="relative md:flex md:items-center md:justify-between">
       <div class="flex items-center justify-between">
@@ -23,20 +23,24 @@
         </div>
       </div>
 
-      <div id="navbar-collapse-with-animation"
-        class="hs-collapse hidden overflow-hidden transition-all duration-300 basis-full grow md:block">
+      <div id="navbar-collapse-with-animation" data-hs-collapse
+        class="hs-collapse hidden transition-all duration-300 basis-full grow md:block">
         <div class="flex flex-col md:flex-row md:items-center md:justify-end md:gap-x-7 md:ps-7">
 
-          <a wire:navigate class="font-medium {{ request()->is('/') ? 'text-blue-600' : 'text-gray-500 hover:text-gray-400' }} py-2 md:py-4  dark:hover:text-gray-300"
+          <a wire:navigate
+            class="font-medium {{ request()->is('/') ? 'text-blue-600' : 'text-gray-500 hover:text-gray-400' }} py-2 md:py-4  dark:hover:text-gray-300"
             href="/" aria-current="page">Home</a>
 
-          <a wire:navigate class="font-medium {{ request()->is('categories') ? 'text-blue-600' : 'text-gray-500 hover:text-gray-400' }} py-2 md:py-4  dark:hover:text-gray-300"
+          <a wire:navigate
+            class="font-medium {{ request()->is('categories') ? 'text-blue-600' : 'text-gray-500 hover:text-gray-400' }} py-2 md:py-4  dark:hover:text-gray-300"
             href="/categories">Categories</a>
 
-          <a wire:navigate class="font-medium {{ request()->is('products') ? 'text-blue-600' : 'text-gray-500 hover:text-gray-400' }} py-2 md:py-4  dark:hover:text-gray-300"
+          <a wire:navigate
+            class="font-medium {{ request()->is('products') ? 'text-blue-600' : 'text-gray-500 hover:text-gray-400' }} py-2 md:py-4  dark:hover:text-gray-300"
             href="/products">Products</a>
 
-          <a wire:navigate class="font-medium flex items-center {{ request()->is('cart') ? 'text-blue-600' : 'text-gray-500 hover:text-gray-400' }} py-2 md:py-4  dark:hover:text-gray-300"
+          <a wire:navigate
+            class="font-medium flex items-center {{ request()->is('cart') ? 'text-blue-600' : 'text-gray-500 hover:text-gray-400' }} py-2 md:py-4  dark:hover:text-gray-300"
             href="/cart">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-1" fill="none" viewBox="0 0 24 24"
               stroke="currentColor" stroke-width="1.5">
@@ -47,17 +51,60 @@
             <span
               class="py-0.5 px-1.5 rounded-full text-xs font-medium bg-blue-50 border border-blue-200 text-blue-600">{{$total_count}}</span>
           </a>
-
-
+          @guest
           <div class="pt-2 md:pt-0">
-            <a wire:navigate class="py-2 px-4 inline-flex items-center text-sm font-semibold rounded-lg bg-blue-600 text-white hover:bg-blue-700"
+            <a wire:navigate
+              class="py-2 px-4 inline-flex items-center text-sm font-semibold rounded-lg bg-blue-600 text-white hover:bg-blue-700"
               href="/login">
               Log in
             </a>
           </div>
+          @endguest
+@auth
+<div 
+  x-data="{ open: false }" 
+  @mouseover="open = true" 
+  @mouseleave="open = false"
+  class="relative inline-flex"
+>
+  <button 
+    type="button"
+    class="flex items-center text-gray-500 hover:text-gray-400 font-medium dark:text-gray-400 dark:hover:text-gray-500"
+  >
+    {{auth()->user()->name}}
+    <svg class="ms-2 w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none"
+      viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path d="m6 9 6 6 6-6" />
+    </svg>
+  </button>
+
+  <div 
+    x-show="open"
+    x-transition
+    class="absolute right-0 z-9999 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-2 space-y-1"
+    @click.away="open = false"
+    style="min-width: 12rem"
+  >
+    <a href="#"
+      class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700 rounded-md">
+      My Orders
+    </a>
+    <a href="#"
+      class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700 rounded-md">
+      My Account
+    </a>
+    <a href="#"
+      class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700 rounded-md">
+      Logout
+    </a>
+  </div>
+</div>
+
+@endauth
 
         </div>
       </div>
+    </div>
     </div>
   </nav>
 </header>
