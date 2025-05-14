@@ -182,60 +182,64 @@
     </div>
 
     {{-- Right: Order Summary --}}
-    <div class="lg:col-span-4">
-      <div class="bg-white rounded-xl shadow p-6 dark:bg-slate-900 mb-8">
-        <h2 class="text-xl font-bold underline text-gray-700 dark:text-white mb-4">
-          Order Summary
-        </h2>
-        <div class="space-y-2">
-          <div class="flex justify-between">
-            <span>Subtotal</span>
-            <span>{{ Number::currency($grand_total, 'BGN') }}</span>
-          </div>
-          <div class="flex justify-between">
-            <span>Taxes</span>
-            <span>0.00</span>
-          </div>
-          <div class="flex justify-between">
-            <span>Shipping</span>
-            <span>0.00</span>
-          </div>
-        </div>
-        <hr class="my-4 border-gray-300 dark:border-gray-600">
-        <div class="flex justify-between font-semibold">
-          <span>Total</span>
-          <span>{{ Number::currency($grand_total, 'BGN') }}</span>
-        </div>
+<!-- Order Summary -->
+<div class="lg:col-span-4">
+  <div class="bg-white rounded-xl shadow p-6 dark:bg-slate-900 mb-12"> <!-- Increased bottom margin -->
+    <h2 class="text-xl font-bold underline text-gray-700 dark:text-white mb-4">
+      Order Summary
+    </h2>
+    <div class="space-y-2">
+      <div class="flex justify-between text-gray-700 dark:text-white">
+        <div>Subtotal</div>
+        <div>{{ Number::currency($grand_total, 'BGN') }}</div>
       </div>
+      <div class="flex justify-between text-gray-700 dark:text-white">
+        <div>Taxes</div>
+        <div>0.00</div>
+      </div>
+      <div class="flex justify-between text-gray-700 dark:text-white">
+        <div>Shipping</div>
+        <div>0.00</div>
+      </div>
+    </div>
+    <hr class="my-4 border-gray-300 dark:border-gray-600">
+    <div class="flex justify-between font-semibold text-gray-700 dark:text-white">
+      <div>Total</div>
+      <div>{{ Number::currency($grand_total, 'BGN') }}</div>
+    </div>
+  </div>
+</div>
 
-      <div class="bg-white rounded-xl shadow p-6 dark:bg-slate-900">
-        <h2 class="text-xl font-bold underline text-gray-700 dark:text-white mb-4">
-          Basket Summary
-        </h2>
-        <ul class="divide-y divide-gray-200 dark:divide-gray-700 space-y-2">
-          @forelse($cart_items as $item)
-            <li class="flex items-center justify-between py-2">
-              <div class="flex items-center space-x-3">
-                <img src="{{ url('storage', $item['image']) }}" alt="{{ $item['name'] }}"
-                     class="w-12 h-12 rounded-full">
-                <div>
-                  <p class="text-sm font-medium text-gray-900 dark:text-white truncate">
-                    {{ $item['name'] }}
-                  </p>
-                  <p class="text-sm text-gray-500 dark:text-gray-400">
-                    Qty: {{ $item['quantity'] }}
-                  </p>
-                </div>
-              </div>
-              <span class="text-base font-semibold text-gray-900 dark:text-white">
-                {{ Number::currency($item['total_amount'], 'BGN') }}
-              </span>
-            </li>
-          @empty
-            <li class="text-center py-4 text-gray-500">No items in cart</li>
-          @endforelse
-        </ul>
-      </div>
+<!-- Basket Summary -->
+<div class="bg-white rounded-xl shadow p-6 dark:bg-slate-900 mb-20 mt-12"> <!-- Added top & bottom margin -->
+  <h2 class="text-xl font-bold underline text-gray-700 dark:text-white mb-4">
+    Basket Summary
+  </h2>
+  <ul class="divide-y divide-gray-200 dark:divide-gray-700 space-y-2">
+    @forelse($cart_items as $item)
+      <li class="flex items-center justify-between py-2">
+        <div class="flex items-center space-x-3">
+          <img src="{{ url('storage', $item['image']) }}" alt="{{ $item['name'] }}"
+               class="w-12 h-12 rounded-full">
+          <div>
+            <p class="text-sm font-medium text-gray-900 dark:text-white truncate">
+              {{ $item['name'] }}
+            </p>
+            <p class="text-sm text-gray-500 dark:text-gray-400">
+              Qty: {{ $item['quantity'] }}
+            </p>
+          </div>
+        </div>
+        <div class="text-base font-semibold text-gray-900 dark:text-white">
+          {{ Number::currency($item['total_amount'], 'BGN') }}
+        </div>
+      </li>
+    @empty
+      <li class="text-center py-4 text-gray-500">No items in cart</li>
+    @endforelse
+  </ul>
+</div>
+
     </div>
   </div>
 </div>
